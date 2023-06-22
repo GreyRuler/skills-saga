@@ -1,8 +1,22 @@
-import { configureStore } from '@reduxjs/toolkit'
-import avatarsReducer from '../features/avatars/avatarsSlice';
+import { combineEpics, createEpicMiddleware } from 'redux-observable';
+import { changeSearchEpic, searchSkillsEpic } from '../epics';
+import { configureStore } from '@reduxjs/toolkit';
+import skillsReducer from '../features/skills/skillsSlice';
 
-export default configureStore({
+const epic = combineEpics(
+	changeSearchEpic,
+	searchSkillsEpic,
+);
+
+const epicMiddleware = createEpicMiddleware();
+
+const store = configureStore({
 	reducer: {
-		avatars: avatarsReducer
-	}
+		skills: skillsReducer
+	},
+	middleware: getDefaultMiddleware => getDefaultMiddleware().concat(epicMiddleware)
 })
+
+epicMiddleware.run(epic);
+
+export default store
