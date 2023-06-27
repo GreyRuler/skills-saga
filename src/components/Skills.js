@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { searchField, setEmptyItems } from '../features/skills/skillsSlice';
+import { searchField } from '../features/skills/skillsSlice';
 
 export default function Skills() {
 	const { items, loading, error, search } = useSelector(state => state.skills.value);
